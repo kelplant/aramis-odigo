@@ -26,37 +26,36 @@ class UserBeanWithTemplateFactory extends AbstractFactory
 
     /**
      * @param $userBeanWithTemplateInfos
-     * @return mixed
+     * @return UserBeanWithTemplate
      */
     public function createFromEntity($userBeanWithTemplateInfos)
     {
-        $userBeanSkillsInfos = array(
-            'id' => $userBeanWithTemplateInfos['id'],
-            'level' => $userBeanWithTemplateInfos['level'],
+        $userBeanWithTemplateSkillsInfos = array(
+            'id' => $userBeanWithTemplateInfos['skillId'],
+            'level' => $userBeanWithTemplateInfos['skillLevel'],
         );
 
         $entity = (new UserBeanWithTemplate())
-            ->setActive($userBeanWithTemplateInfos['activeState'])
-            ->setData($userBeanWithTemplateInfos['phoneNumberOdigo'])
-            ->setDdiNumber($userBeanWithTemplateInfos['phoneNumberInternal'])
-            ->setDirectAccessCode($userBeanWithTemplateInfos['phoneNumberOdigo'])
+            ->setActive($userBeanWithTemplateInfos['active'])
+            ->setData($userBeanWithTemplateInfos['odigoPhoneNumber'])
+            ->setDdiNumber($userBeanWithTemplateInfos['fixePhoneNumber'])
+            ->setDirectAccessCode($userBeanWithTemplateInfos['odigoPhoneNumber'])
             ->setFirstName($userBeanWithTemplateInfos['firstName'])
             ->setLanguage($userBeanWithTemplateInfos['language'])
-            ->setListAgentGroup($userBeanWithTemplateInfos['listAgentGroup'])
-            ->setListSkill($this->userSkillBeanWithTemplateFactory->createFromEntity($userBeanSkillsInfos))
-            ->setListTemplate($userBeanWithTemplateInfos['listTemplate'])
+//            ->setListAgentGroup("ga_" . $userBeanWithTemplateInfos['Agence'])
+//            ->setListSkill($this->userSkillBeanWithTemplateFactory->createFromEntity($userBeanWithTemplateSkillsInfos))
+            ->setListTemplate($userBeanWithTemplateInfos['Agence'] . "_" . $userBeanWithTemplateInfos['fonction'])
             ->setMail($userBeanWithTemplateInfos['mail'])
             ->setName($userBeanWithTemplateInfos['name'])
             ->setOverloadGroup($userBeanWithTemplateInfos['overloadGroup'])
             ->setOverloadTemplate($userBeanWithTemplateInfos['overloadTemplate'])
             ->setPassword($userBeanWithTemplateInfos['password'])
-            ->setPhoneLoginNumber($userBeanWithTemplateInfos['phoneNumberOdigo'])
-            ->setPhoneLoginPassword($userBeanWithTemplateInfos['phoneLoginPassword'])
-            ->setTemplateId($userBeanWithTemplateInfos['templateId'])
+            ->setPhoneLoginNumber($userBeanWithTemplateInfos['odigoPhoneNumber'])
+//            ->setPhoneLoginPassword($userBeanWithTemplateInfos['phoneLoginPassword'])
+            ->setTemplateId($userBeanWithTemplateInfos['Agence'] . "_" . $userBeanWithTemplateInfos['fonction'])
             ->setTimeZone($userBeanWithTemplateInfos['timeZone'])
             ->setUserId($userBeanWithTemplateInfos['companyExtension'])
         ;
-
 
         return $entity;
     }

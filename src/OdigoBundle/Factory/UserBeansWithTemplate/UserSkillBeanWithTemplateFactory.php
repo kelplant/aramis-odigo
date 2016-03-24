@@ -20,7 +20,7 @@ class UserSkillBeanWithTemplateFactory extends AbstractFactory
     {
         $UserSkillBeanWithTemplate = new UserSkillBeanWithTemplate(
             $UserSkillBeanWithTemplate['id'],
-            $UserSkillBeanWithTemplate['label']
+            $UserSkillBeanWithTemplate['level']
         );
 
         return $UserSkillBeanWithTemplate;

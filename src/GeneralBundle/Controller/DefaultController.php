@@ -36,30 +36,42 @@ class DefaultController extends Controller
         );
 
        $userBeanWithTemplateInfos = array(
-        'active' => "1",
-       'data' => "0404040404",
-       'ddiNumber' => "0622244545",
-       'directAccessCode' => "0404040404",
-       'firstName' => "XavTestWs",
-       'language' => "1",
-       'mail' => "xavtestws@mail.fr",
-       'name' => "arrtestws",
-       'overloadGroup' => "true",
-       'overloadTemplate' => "true",
-       'password' => "passwordtest",
-       'phoneLoginNumber' => "0404040404",
-       'templateId' => "Aix_CC",
-       'userId' => "xavarrws",
+           'active' => "1",
+           'odigoPhoneNumber' => "0404040404",
+           'fixePhoneNumber' => "0622244545",
+           'firstName' => "XavTestWs",
+           'language' => "1",
+           'mail' => "xavtestws@mail.fr",
+           'name' => "arrtestws",
+           'overloadGroup' => "true",
+           'overloadTemplate' => "true",
+           'password' => "passwordtest",
+           'Agence' => "Aix",
+           'fonction' => "CC",
+           'companyExtension' => "xavarrws",
+           'skillId' => "MARKET",
+           'skillLevel' => "3",
+           'phoneLoginPassword' => "",
+           'timeZone' => "fr",
        );
 
-        $create = $this->get('odigo.service.client')->create(
+       $create = $this->get('odigo.service.client')->create(
+           $this->getParameter('odigo_url'),
+           $this->getParameter('odigo_login'),
+           $this->getParameter('odigo_password'),
+           $userBeanInfos
+       );
+       echo "<br><br>";
+       var_dump($create);
+       echo "<br><br>";
+       $createWithTemplate = $this->get('odigo.service.client')->createwithtemplate(
             $this->getParameter('odigo_url'),
             $this->getParameter('odigo_login'),
             $this->getParameter('odigo_password'),
-            $userBeanInfos
+            $userBeanWithTemplateInfos
         );
        echo "<br><br>";
-        var_dump($create);
+       var_dump($createWithTemplate);
        echo "<br><br>";
 //        $companyExtensionId = "cchampy";
 //        $delete = $this->get('odigo.service.client')->delete(
@@ -69,14 +81,14 @@ class DefaultController extends Controller
 //            $companyExtensionId
 //            );
 
-        $export = $this->get('odigo.service.client')->export(
-            $this->getParameter('odigo_url'),
-            $this->getParameter('odigo_login'),
-            $this->getParameter('odigo_password'),
-            $this->getParameter('odigo_login')
-        );
-        echo "<br><br>";
-        var_dump($export);
+//        $export = $this->get('odigo.service.client')->export(
+//            $this->getParameter('odigo_url'),
+//            $this->getParameter('odigo_login'),
+//            $this->getParameter('odigo_password'),
+//            $this->getParameter('odigo_login')
+//        );
+//        echo "<br><br>";
+//        var_dump($export);
         echo "<br><br>";
         echo "12345";
 
