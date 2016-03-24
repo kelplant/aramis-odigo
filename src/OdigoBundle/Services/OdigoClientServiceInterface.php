@@ -11,8 +11,8 @@ namespace OdigoBundle\Services;
 
 interface OdigoClientServiceInterface
 {
-    public function create($url,$wsLogin,$wsPassword,$userBeanInfos);
-    public function createwithtemplate($url,$wsLogin,$wsPassword,$userBeanWithTemplateInfos);
-    public function delete($url,$wsLogin,$wsPassword,$userId);
-    public function export($url,$wsLogin,$wsPassword,$AutoUserAdmin);
+    public function create($parameters,$userBeanInfos);
+    public function createwithtemplate($parameters,$userBeanWithTemplateInfos);
+    public function delete($parameters,$userId);
+    public function export($parameters,$AutoUserAdmin);
 }
