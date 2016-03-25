@@ -1,7 +1,3 @@
-odigo:
-    resource: "@OdigoBundle/Resources/config/routing.yml"
-    prefix:   /
-
 general:
     resource: "@GeneralBundle/Resources/config/routing.yml"
     prefix:   /

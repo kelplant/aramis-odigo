@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new GeneralBundle\GeneralBundle(),
-            new OdigoBundle\OdigoBundle(),
+            new xavarr\OdigoServiceBundle\xavarrOdigoServiceBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

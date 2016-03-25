@@ -6,55 +6,90 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-
-    public function indexAction()
+    /**
+     * @param $companyPhone
+     * @param $companyInternalPhone
+     * @param $companyPrenom
+     * @param $companyEmail
+     * @param $companyNom
+     * @param $companyPassword
+     * @param $companyAgence
+     * @param $companyService
+     * @param $companyExtension
+     * @return array
+     */
+    private function createWithTemplateArrayForRequestFromCompany($companyPhone,$companyInternalPhone,$companyPrenom,$companyEmail,$companyNom,$companyPassword,$companyAgence,$companyService,$companyExtension)
     {
-        $userBeanInfos = array(
-            'activeState' => "0",
-            'agentGroups' => "ga_AIX",
-            'breaks' => "0",
+        return $userBeanWithTemplateInfos = array(
+            'active' => "1",
+            'data' => $companyPhone,
+            'ddiNumber' => $companyInternalPhone,
+            'directAccessCode' => $companyPhone,
+            'firstName' => $companyPrenom,
+            'language' => "1",
+            'listAgentGroup' => NULL,
+            'listTemplate' => $companyAgence . "_" . $companyService,
+            'mail' => $companyEmail,
+            'name' => $companyNom,
+            'overloadGroup' => "true",
+            'overloadTemplate' => "true",
+            'password' => $companyPassword,
+            'phoneLoginNumber' => $companyPhone,
+            'phoneLoginPassword' => NULL,
+            'templateId' => $companyAgence . "_" . $companyService,
+            'timeZone' => "fr",
+            'userId' => $companyExtension,
+            'skillId' => NULL,
+            'skillLevel' => NULL
+        );
+    }
+
+    /**
+     * @param $companyInternalPhone
+     * @param $companyPrenom
+     * @param $companyEmail
+     * @param $companyNom
+     * @param $companyPassword
+     * @param $companyAgence
+     * @param $companyExtension
+     * @return array
+     */
+    private function createArrayForRequestFromCompany($companyInternalPhone,$companyPrenom,$companyEmail,$companyNom,$companyPassword,$companyAgence,$companyExtension)
+    {
+        return $userBeanInfos = array(
+            'activeState' => "1",
+            'agentGroups' => "ga_" . strtoupper($companyAgence),
+            'breaks' => NULL,
             'calendarId' => "GENERAL",
-            'ddiNumber' => "0232190924",
+            'ddiNumber' => $companyInternalPhone,
             'disruptionDuration' => "15",
-            'email' => "fbadets@prosodie.com",
+            'email' => $companyEmail,
             'enable2WaysSwitch' => "true",
             'enableCallBack' => "true",
             'enableConference' => "true",
             'enableOutCall' => "true",
             'enableRecording' => "true",
-            'firstName' => "Freddy",
+            'firstName' => $companyPrenom,
             'languageId' => "1",
-            'loginTel' => "35967",
-            'name' => "arrtest",
-            'password' => "toto",
+            'loginTel' => $companyInternalPhone,
+            'name' => $companyNom,
+            'password' => $companyPassword,
             'transfertDDIAuthorized' => "true",
-            'userId' => "fbad7",
+            'userId' => $companyExtension,
             'wrapupTime' => "15",
-            'level' => "1",
+            'level' => "3",
             'skillKeyword' => "MARKET",
             'specialty' => "1",
         );
+     }
 
-        $userBeanWithTemplateInfos = array(
-            'active' => "1",
-            'odigoPhoneNumber' => "0404040404",
-            'fixePhoneNumber' => "0622244545",
-            'firstName' => "XavTestWs",
-            'language' => "1",
-            'mail' => "xavtestws@mail.fr",
-            'name' => "arrtestws",
-            'overloadGroup' => "true",
-            'overloadTemplate' => "true",
-            'password' => "passwordtest",
-            'Agence' => "Aix",
-            'fonction' => "CC",
-            'companyExtension' => "xavarrws",
-            'skillId' => "MARKET",
-            'skillLevel' => "3",
-            'phoneLoginPassword' => "",
-            'timeZone' => "fr",
-        );
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction()
+    {
 
+        $userBeanInfos = $this->createArrayForRequestFromCompany("0622244545","XavTestWs","xavtestws@mail.fr","arrtestws","passwordtest","Aix","xavarrws");
 
         $create = $this->get('odigo.service.client')->create(
             $this->getParameter('odigo'),
@@ -63,6 +98,11 @@ class DefaultController extends Controller
         echo "<br><br>";
         var_dump($create);
         echo "<br><br>";
+
+
+
+        $userBeanWithTemplateInfos = $this->createWithTemplateArrayForRequestFromCompany("0405440404","0622544545","fdstTestWs","fdstestws@mail.fr","fdsttestws","passwordtest","Aix","CC","fdst");
+
         $createWithTemplate = $this->get('odigo.service.client')->createwithtemplate(
             $this->getParameter('odigo'),
             $userBeanWithTemplateInfos
@@ -70,20 +110,40 @@ class DefaultController extends Controller
         echo "<br><br>";
         var_dump($createWithTemplate);
         echo "<br><br>";
-//        $companyExtensionId = "cchampy";
-//        $delete = $this->get('odigo.service.client')->delete(
-//            $this->getParameter('odigo'),
-//            $companyExtensionId
-//            );
 
-//        $export = $this->get('odigo.service.client')->export(
-//            $this->getParameter('odigo'),
-//            $this->getParameter('odigo_login')
-//        );
-//        echo "<br><br>";
-//        var_dump($export);
+
+
+
+
+
+
+//
         echo "<br><br>";
         echo "12345";
+
+        return $this->render('GeneralBundle:Default:index.html.twig');
+    }
+
+    public function deleteAction($companyExtensionId)
+    {
+        $delete = $this->get('odigo.service.client')->delete(
+            $this->getParameter('odigo'),
+            $companyExtensionId
+            );
+        echo "<br><br>";
+        var_dump($delete);
+
+        return $this->render('GeneralBundle:Default:index.html.twig');
+    }
+
+    public function exportAction()
+    {
+        $export = $this->get('odigo.service.client')->export(
+            $this->getParameter('odigo'),
+            $this->getParameter('odigo_login')
+        );
+        echo "<br><br>";
+        var_dump($export);
 
         return $this->render('GeneralBundle:Default:index.html.twig');
     }
